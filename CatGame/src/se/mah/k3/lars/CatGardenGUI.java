@@ -2,6 +2,7 @@ package se.mah.k3.lars;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -117,7 +118,6 @@ public class CatGardenGUI extends JFrame {
 		bw.setVisible(true);
 		bw.makeSound();
 		
-		
 		Electric electric = new Electric(gameArea);
 		electric.setPosition(50, 100);
 		electric.setVisible(true);
@@ -128,37 +128,44 @@ public class CatGardenGUI extends JFrame {
 		hay.setVisible(true);
 		hay.makeSound();
 		
+		//And declared as a Tower
 		Tower t = new Hay(gameArea);
 		t.setPosition(10, 10);
 		t.setVisible(true);
 		t.makeSound();
 		
-		//Make some repeated sound......
+		//Lets make a Arraylist for towers o play some sounds 
+		ArrayList<Tower> myTowers = new ArrayList<Tower>();
+		myTowers.add(bw);
+		myTowers.add(hay);
+		myTowers.add(electric);
+		myTowers.add(t);
+		
+		//Make some repeated sound for fun :)......
+		//Uhh a anonymous inner class this is not so very easy to understand, just look here
 		new Thread(new Runnable() {
-			boolean visible = false; 
+			boolean visible = false;
+			Random r = new Random();
 			@Override
 			public void run() {
 				while(true){
+					//Wait 5 sec
 					try {
 						Thread.sleep(5000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					} catch (InterruptedException e) {}
+					//Hide them all
+					for (Tower tower : myTowers) {
+						tower.setVisible(false);
 					}
-					visible = !visible;
-					if (visible){
-						bw.setVisible(true);
-						electric.setVisible(false);
-						bw.makeSound();
-					}else{
-						electric.setVisible(true);
-						bw.setVisible(false);
-						electric.makeSound();
-					}
+					//Select a random tower
+					int rand = r.nextInt(myTowers.size());
+					Tower t = myTowers.get(rand);
+					//Set it visible
+					t.setVisible(true);
+					t.makeSound();
 				}
 				
 			}
 		}).start();
-		
 	}
 }
