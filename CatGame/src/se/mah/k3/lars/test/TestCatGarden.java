@@ -1,6 +1,9 @@
-package se.mah.k3.lars;
+package se.mah.k3.lars.test;
 
 import java.util.Random;
+
+import se.mah.k3.lars.Cat;
+import se.mah.k3.lars.CatGarden;
 
 public class TestCatGarden {
 

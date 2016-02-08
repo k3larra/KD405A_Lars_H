@@ -7,12 +7,19 @@ import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import se.mah.k3.lars.towers.BarbedWire;
+import se.mah.k3.lars.towers.Electric;
+import se.mah.k3.lars.towers.Hay;
+import se.mah.k3.lars.towers.Tower;
+
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class CatGardenGUI extends JFrame {
 
@@ -20,6 +27,8 @@ public class CatGardenGUI extends JFrame {
 	private JPanel contentPane;	
 	//I declared the garden as a variable here because I will probably use it allover the place
 	private CatGarden garden;
+	private JTextArea textArea;
+	private JPanel gameArea;
 	/**
 	 * Launch the application.
 	 */
@@ -74,15 +83,15 @@ public class CatGardenGUI extends JFrame {
 		JLabel lblCatkill = new JLabel("CatKill");
 		panel.add(lblCatkill);
 		
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(null);
+		gameArea = new JPanel();
+		contentPane.add(gameArea, BorderLayout.CENTER);
+		gameArea.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(59, 13, 351, 184);
-		panel_1.add(scrollPane);
+		scrollPane.setBounds(0, 259, 487, 50);
+		gameArea.add(scrollPane);
 		
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		scrollPane.setViewportView(textArea);
 		//Load the textarea with the cats
 		textArea.setText(garden.getCats());
@@ -101,6 +110,55 @@ public class CatGardenGUI extends JFrame {
 			}
 		});
 		contentPane.add(btnKillACat, BorderLayout.SOUTH);
+		
+		//The towers
+		BarbedWire bw = new BarbedWire(gameArea); 
+		bw.setPosition(100, 50);
+		bw.setVisible(true);
+		bw.makeSound();
+		
+		
+		Electric electric = new Electric(gameArea);
+		electric.setPosition(50, 100);
+		electric.setVisible(true);
+		electric.makeSound();
+		
+		Hay hay = new Hay(gameArea);
+		hay.setPosition(100, 100);
+		hay.setVisible(true);
+		hay.makeSound();
+		
+		Tower t = new Hay(gameArea);
+		t.setPosition(10, 10);
+		t.setVisible(true);
+		t.makeSound();
+		
+		//Make some repeated sound......
+		new Thread(new Runnable() {
+			boolean visible = false; 
+			@Override
+			public void run() {
+				while(true){
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					visible = !visible;
+					if (visible){
+						bw.setVisible(true);
+						electric.setVisible(false);
+						bw.makeSound();
+					}else{
+						electric.setVisible(true);
+						bw.setVisible(false);
+						electric.makeSound();
+					}
+				}
+				
+			}
+		}).start();
 		
 	}
 }

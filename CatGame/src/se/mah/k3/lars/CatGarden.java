@@ -21,7 +21,9 @@ public class CatGarden {
 	}
 	
 	public void killCat(){
-		allCats.remove(0);
+		if(allCats.size()>0){
+			allCats.remove(0);
+		}
 	}
 	
 	public String getName() {
