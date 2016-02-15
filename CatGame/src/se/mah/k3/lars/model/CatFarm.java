@@ -1,15 +1,17 @@
-package se.mah.k3.lars;
+package se.mah.k3.lars.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class CatGarden {
+import se.mah.k3.lars.Constants;
+
+public class CatFarm {
 	private ArrayList<Cat> allCats;
 	private String name;
 	
 	
 
-	public CatGarden(String name){
+	public CatFarm(String name){
 		this.allCats = new ArrayList<Cat>();
 		this.name = name;
 	}
@@ -22,6 +24,7 @@ public class CatGarden {
 	
 	public void killCat(){
 		if(allCats.size()>0){
+			allCats.get(0).hideCat();
 			allCats.remove(0);
 		}
 	}
@@ -40,6 +43,10 @@ public class CatGarden {
 			s = s + "Name: "+ cat.getName()+" Age: "+ cat.getAge()+"\n";
 		}
 		return s;
+	}
+	
+	public ArrayList<Cat> getAllCats(){
+		return allCats;
 	}
 	
 }

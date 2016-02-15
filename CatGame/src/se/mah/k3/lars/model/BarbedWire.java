@@ -1,4 +1,4 @@
-package se.mah.k3.lars.towers;
+package se.mah.k3.lars.model;
 
 import java.net.URL;
 
@@ -6,13 +6,14 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import se.mah.k3.lars.CatGardenGUI;
 
 public class BarbedWire extends Tower{
 
-	public BarbedWire(JPanel gameArea) {
+	public BarbedWire(JLayeredPane gameArea) {
 		super(gameArea);
 		label.setIcon(new ImageIcon(CatGardenGUI.class.getResource("/images/bw.png")));
 		setVisible(false);

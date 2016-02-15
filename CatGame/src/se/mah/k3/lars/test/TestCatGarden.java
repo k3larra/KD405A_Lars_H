@@ -2,8 +2,8 @@ package se.mah.k3.lars.test;
 
 import java.util.Random;
 
-import se.mah.k3.lars.Cat;
-import se.mah.k3.lars.CatGarden;
+import se.mah.k3.lars.model.Cat;
+import se.mah.k3.lars.model.CatFarm;
 
 public class TestCatGarden {
 
@@ -12,7 +12,7 @@ public class TestCatGarden {
 		/* Eclipse chooses to run the file that is open here if it has a main class but it only runs one of them
 		So if you press play here only this Main method will run not the one in TestCat or the one in CatGardenGUI*/ 
 		//Create the garden
-		CatGarden garden = new CatGarden("Little Annas Garden");
+		CatFarm garden = new CatFarm("Little Annas Garden");
 		//Add one Cat 
 		Cat g = new Cat("red","Olle");
 		garden.addCat(g);

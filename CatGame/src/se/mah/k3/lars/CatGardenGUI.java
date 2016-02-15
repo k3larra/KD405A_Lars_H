@@ -9,10 +9,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import se.mah.k3.lars.towers.BarbedWire;
-import se.mah.k3.lars.towers.Electric;
-import se.mah.k3.lars.towers.Hay;
-import se.mah.k3.lars.towers.Tower;
+import se.mah.k3.lars.model.BarbedWire;
+import se.mah.k3.lars.model.Cat;
+import se.mah.k3.lars.model.CatFarm;
+import se.mah.k3.lars.model.Electric;
+import se.mah.k3.lars.model.Hay;
+import se.mah.k3.lars.model.Tower;
 
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
@@ -21,151 +23,115 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.JLayeredPane;
 
-public class CatGardenGUI extends JFrame {
+public class CatGardenGUI extends JFrame implements ActionListener{
 
 	
 	private JPanel contentPane;	
 	//I declared the garden as a variable here because I will probably use it allover the place
-	private CatGarden garden;
+	//private Cats garden;
+	private GardenController gardenController;
 	private JTextArea textArea;
-	private JPanel gameArea;
-	/**
-	 * Launch the application.
-	 */
-	//Also a main method but a little bit more complicated (It starts in an other thread)
-	/* Eclipse chooses to run the file that is open here if it has a main class but it only runs one of them
-	So if you press play here only this Main method will run not the one in TestCat or the one in TestCatGarden*/ 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					
-					CatGardenGUI frame = new CatGardenGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	private JPanel panel;
+	private JPanel panel_1;
+	private JScrollPane scrollPane_1;
+	private JLabel lblNewLabel_1;
+	private JLayeredPane gameArea;
 	/**
 	 * Create the frame. 
 	 *THIS is the Constructor for the JFrame
 	 *
 	 */
-	public CatGardenGUI() {
-		//Create instance of CarGarden
-		garden = new CatGarden("Mor Anna 8");
-		//Add the cats about the same as the one in TestCatGarden
-		for (int i = 0; i < 50; i++) {
-			//Create a Cat
-			Cat d = new Cat("green","Olle"+i);
-			//Get a random age by an instance of the Random Class
-			Random r = new Random();
-			//And ask it to deliver a int from 0-300
-			int age = r.nextInt(300);
-			d.setAge(age);
-			garden.addCat(d);
-		}
-		
+	public CatGardenGUI() {		
 		//The code below is created from GUI
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 527, 417);
+		setBounds(100, 100, 667, 679);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.NORTH);
-		
-		JLabel lblCatkill = new JLabel("CatKill");
-		panel.add(lblCatkill);
-		
-		gameArea = new JPanel();
+		gameArea = new JLayeredPane();
 		contentPane.add(gameArea, BorderLayout.CENTER);
-		gameArea.setLayout(null);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 259, 487, 50);
-		gameArea.add(scrollPane);
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(0, 0, 640, 480);
+		gameArea.add(lblNewLabel);
+		lblNewLabel.setIcon(new ImageIcon(CatGardenGUI.class.getResource("/images/lawn640x480.jpg")));
+		
+		
+		panel = new JPanel();
+		contentPane.add(panel, BorderLayout.SOUTH);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]{624, 0};
+		gbl_panel.rowHeights = new int[]{2, 76, 35, 0};
+		gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panel.setLayout(gbl_panel);
+		
+		scrollPane_1 = new JScrollPane();
+		GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
+		gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane_1.insets = new Insets(0, 0, 5, 0);
+		gbc_scrollPane_1.gridx = 0;
+		gbc_scrollPane_1.gridy = 1;
+		panel.add(scrollPane_1, gbc_scrollPane_1);
 		
 		textArea = new JTextArea();
-		scrollPane.setViewportView(textArea);
-		//Load the textarea with the cats
-		textArea.setText(garden.getCats());
+		scrollPane_1.setViewportView(textArea);
+		textArea.setRows(4);
 		
+		panel_1 = new JPanel();
+		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+		gbc_panel_1.anchor = GridBagConstraints.NORTHWEST;
+		gbc_panel_1.gridx = 0;
+		gbc_panel_1.gridy = 2;
+		panel.add(panel_1, gbc_panel_1);
+		//Load the textarea with the cats
 		//This was created by dragging in a button and doubleklick it
 		JButton btnKillACat = new JButton("Kill a cat");
+		panel_1.add(btnKillACat);
 		//Listen for buttonklicks
-		btnKillACat.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//This method is called when the Killcat button is pressed
-				//So kill it
-				garden.killCat();
-				//Set new text in the textArea
-				textArea.setText(garden.getCats());
-			
-			}
-		});
-		contentPane.add(btnKillACat, BorderLayout.SOUTH);
+		//MyListener myListener = new MyListener();
+		btnKillACat.addActionListener(this);
 		
-		//The towers
-		BarbedWire bw = new BarbedWire(gameArea); 
-		bw.setPosition(100, 50);
-		bw.setVisible(true);
-		bw.makeSound();
 		
-		Electric electric = new Electric(gameArea);
-		electric.setPosition(50, 100);
-		electric.setVisible(true);
-		electric.makeSound();
-		
-		Hay hay = new Hay(gameArea);
-		hay.setPosition(100, 100);
-		hay.setVisible(true);
-		hay.makeSound();
-		
-		//And declared as a Tower
-		Tower t = new Hay(gameArea);
-		t.setPosition(10, 10);
-		t.setVisible(true);
-		t.makeSound();
-		
-		//Lets make a Arraylist for towers o play some sounds 
-		ArrayList<Tower> myTowers = new ArrayList<Tower>();
-		myTowers.add(bw);
-		myTowers.add(hay);
-		myTowers.add(electric);
-		myTowers.add(t);
-		
-		//Make some repeated sound for fun :)......
-		//Uhh a anonymous inner class this is not so very easy to understand, just look here
-		new Thread(new Runnable() {
-			boolean visible = false;
-			Random r = new Random();
-			@Override
-			public void run() {
-				while(true){
-					//Wait 5 sec
-					try {
-						Thread.sleep(5000);
-					} catch (InterruptedException e) {}
-					//Hide them all
-					for (Tower tower : myTowers) {
-						tower.setVisible(false);
-					}
-					//Select a random tower
-					int rand = r.nextInt(myTowers.size());
-					Tower t = myTowers.get(rand);
-					//Set it visible
-					t.setVisible(true);
-					t.makeSound();
-				}
-				
-			}
-		}).start();
+		//Create GardenController
+		gardenController = new GardenController(this);
+	}
+
+	public JLayeredPane getGameArea(){
+		return this.gameArea;
+	}
+	
+	public JTextArea getOutputTextArea(){
+		return textArea;
+	}
+	
+	/*private class MyListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//This method is called when the Killcat button is pressed
+			//So kill it
+			gardenController.getCatFarm().killCat();
+			//Set new text in the textArea
+			textArea.setText(gardenController.getCatFarm().getCats());
+		}
+	}
+*/
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		//So kill it
+		gardenController.getCatFarm().killCat();
+		//Set new text in the textArea
+		textArea.setText(gardenController.getCatFarm().getCats());
 	}
 }

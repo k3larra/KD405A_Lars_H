@@ -1,4 +1,4 @@
-package se.mah.k3.lars.towers;
+package se.mah.k3.lars.model;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -9,13 +9,14 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.swing.ImageIcon;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import se.mah.k3.lars.CatGardenGUI;
 
 public class Hay extends Tower {
 
-	public Hay(JPanel gameArea) {
+	public Hay(JLayeredPane gameArea) {
 		super(gameArea);
 		label.setIcon(new ImageIcon(CatGardenGUI.class.getResource("/images/hay.png")));
 	}

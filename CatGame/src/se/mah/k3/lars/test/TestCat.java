@@ -1,6 +1,6 @@
 package se.mah.k3.lars.test;
 
-import se.mah.k3.lars.Cat;
+import se.mah.k3.lars.model.Cat;
 
 public class TestCat {
 
