@@ -41,12 +41,15 @@ public class TryIt extends JFrame {
 		setContentPane(contentPane);
 		PixelController px = PixelController.getInstance(Screen.ASSIGNMENT_7);
 		try {
-			Thread.sleep(10000);
+			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		px.setPixel(10, 10, Color.WHITE);
+		px.setPixel(10, 10, Color.BLACK);
+		px.setPixel(10, 11, Color.WHITE);
+		px.setPixel(10, 12, Color.BLACK);
+		px.setPixel(10, 13, Color.WHITE);
 	}
 
 }
