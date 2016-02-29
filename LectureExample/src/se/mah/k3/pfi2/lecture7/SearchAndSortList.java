@@ -1,7 +1,6 @@
 package se.mah.k3.pfi2.lecture7;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 
