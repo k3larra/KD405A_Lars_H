@@ -369,7 +369,7 @@ public class PublicScreenGUI extends JFrame {
 	    		LIB.add(lblRoom);
 	    		LIBpanel.add(LIB);
 	    		if ((i+nbrExtraRows)>24){
-	    			libScrolling.startScrolling();
+	    			//libScrolling.startScrolling();
 	    		}
 			}
 		contentPane.repaint();
