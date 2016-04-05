@@ -18,4 +18,5 @@ public class Constants {
 	public static int maxNumberPosts = 24;
 	public static boolean addOngoingCourses= false;
 	///Men 
+	public static int minutesLate=20;  //Let the bookings be there for 20 more minutes after start for late arrives (Not Me)
 }

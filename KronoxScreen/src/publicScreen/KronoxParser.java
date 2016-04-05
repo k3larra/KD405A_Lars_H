@@ -94,6 +94,9 @@ public class KronoxParser {
 						//Is it only bookings that are within limit 
 						Calendar c  = Calendar.getInstance();
 						c.add(Calendar.MINUTE,Constants.minutesBefore);
+						Calendar c2  = Calendar.getInstance();
+						c2.add(Calendar.MINUTE, Constants.minutesLate);
+						//c.add(Calendar.MINUTE,Constants.minutesBefore);
 						if (thisBooking.getStartTime().compareTo(c)>0){ //StartTimeless than Constants.minutesbefore
 								if((thisBooking.getStartTime().get(Calendar.DAY_OF_YEAR)-Calendar.getInstance().get(Calendar.DAY_OF_YEAR)==1)){
 								//Tomorrow and list not full
@@ -114,8 +117,10 @@ public class KronoxParser {
 							}
 						}else{
 							if(thisBooking.getEndTime().compareTo(Calendar.getInstance())>0){  //Has not finished yet
-								if (Constants.addOngoingCourses){
-									Constants.bookingsList.add(thisBooking);
+								if(thisBooking.getStartTime().compareTo(c2)>0){  //And only Constants.minutesLate after start
+									if (Constants.addOngoingCourses){
+										Constants.bookingsList.add(thisBooking);
+									}
 								}
 							}
 						}
