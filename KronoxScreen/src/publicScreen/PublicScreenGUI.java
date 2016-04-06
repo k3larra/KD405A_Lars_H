@@ -312,17 +312,17 @@ public class PublicScreenGUI extends JFrame {
 	        	if ((i & 1) == 0) 
 	        	{
 	        		if ( Constants.bookingsList.get(i).getStartTime().before(c)){ //Startat
-	        			LIB.setBackground(new Color(255,255,224,200));
+	        			LIB.setBackground(new Color(255,255,224,160));
 	        		}else if(Constants.bookingsList.get(i).getStartTime().before(c2)){
-	        			LIB.setBackground(new Color(230,245,172,200));
+	        			LIB.setBackground(new Color(230,245,172,160));
 	        		}else{
 	        			LIB.setBackground(Color.WHITE);
 	        		}
 	        	}else{
 	        		if ( Constants.bookingsList.get(i).getStartTime().before(c)){ //Startat
-	        			LIB.setBackground(new Color(238,232,170,200));
+	        			LIB.setBackground(new Color(238,232,170,160));
 	        		}else if(Constants.bookingsList.get(i).getStartTime().before(c2)){//Startar om 60
-	        			LIB.setBackground(new Color(186,206,106,200));
+	        			LIB.setBackground(new Color(186,206,106,160));
 	        		}else{
 	        			LIB.setBackground(new Color(240,240,240,255));
 	        		}
