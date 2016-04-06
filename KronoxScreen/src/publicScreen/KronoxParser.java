@@ -117,11 +117,11 @@ public class KronoxParser {
 							}
 						}else{
 							if(thisBooking.getEndTime().compareTo(Calendar.getInstance())>0){  //Has not finished yet
-								//if(thisBooking.getStartTime().before(c2)){  //And only Constants.minutesLate after start
+								if(thisBooking.getStartTime().before(c2)){  //And only Constants.minutesLate after start
 									if (Constants.addOngoingCourses){
 										Constants.bookingsList.add(thisBooking);
 									}
-								//}
+								}
 							}
 						}
 							
