@@ -16,7 +16,7 @@ public class Constants {
 	public static ArrayList<SchemaPost> bookingsList = new ArrayList<SchemaPost>();
 	public static int minutesBefore = 0; //Started 0 minutes ago + and minuseee
 	public static int maxNumberPosts = 24;
-	public static boolean addOngoingCourses= false;
+	public static boolean addOngoingCourses= true;
 	///Men 
 	public static int minutesLate=20;  //Let the bookings be there for 20 more minutes after start for late arrives (Not Me)
 }
