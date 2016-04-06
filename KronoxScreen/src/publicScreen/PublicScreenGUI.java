@@ -298,40 +298,45 @@ public class PublicScreenGUI extends JFrame {
 				
 			}
 			
-			ArrayList<String> courseNames = Constants.bookingsList.get(i).getCourses();
+			//ArrayList<String> courseNames = Constants.bookingsList.get(i).getCourses();
 				//System.out.println("NAMN: "+Constants.utb_kursinstans_grupper.get(courseNames.get(0)));
 				String startTime= fix(Constants.bookingsList.get(i).getStartTime().get(Calendar.HOUR_OF_DAY))+":"+fix(Constants.bookingsList.get(i).getStartTime().get(Calendar.MINUTE));
 	    		String endTime= fix(Constants.bookingsList.get(i).getEndTime().get(Calendar.HOUR_OF_DAY))+":"+fix(Constants.bookingsList.get(i).getEndTime().get(Calendar.MINUTE));
-	    		Calendar c = Calendar.getInstance();
-	    		Calendar c2 = Calendar.getInstance();
-	    		c2.add(Calendar.MINUTE, Constants.minutesLate);
+	    		
+	    		Calendar now = Calendar.getInstance();
+	    		Calendar minutesBefore = Calendar.getInstance();
+	    		minutesBefore.setTime(Constants.bookingsList.get(i).getStartTime().getTime());
+	    		minutesBefore.add(Calendar.MINUTE,-Constants.minutesBefore);
+	    		Calendar minutesLate = Calendar.getInstance();
+	    		minutesLate.setTime(Constants.bookingsList.get(i).getStartTime().getTime());
+	    		minutesLate.add(Calendar.MINUTE, Constants.minutesLate);
 				JPanel LIB = new JPanel();
-				LIB.setLayout(new FlowLayout(FlowLayout.LEFT,15,15));
-			
-				
+				LIB.setLayout(new FlowLayout(FlowLayout.LEFT,15,15));	
+				LIB.setPreferredSize(new Dimension(libWidth,libHeight));
+	    		LIB.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
 	        	if ((i & 1) == 0) 
 	        	{
-	        		if ( Constants.bookingsList.get(i).getStartTime().before(c)){ //Startat
-	        			LIB.setBackground(new Color(255,255,224,160));
-	        		}else if(Constants.bookingsList.get(i).getStartTime().before(c2)){
-	        			LIB.setBackground(new Color(230,245,172,190));
+	        		if ( now.after(minutesBefore)&&now.before(Constants.bookingsList.get(i).getStartTime())){ //Startar snart
+	        			LIB.setBackground(new Color(230,245,172,160));
+	        		}else if(now.after(Constants.bookingsList.get(i).getStartTime())&&now.before(minutesLate)){
+	        			LIB.setBackground(new Color(255,255,224,160)); //Yellow
 	        		}else{
 	        			LIB.setBackground(Color.WHITE);
 	        		}
 	        	}else{
-	        		if ( Constants.bookingsList.get(i).getStartTime().before(c)){ //Startat
-	        			LIB.setBackground(new Color(238,232,170,160));
-	        		}else if(Constants.bookingsList.get(i).getStartTime().before(c2)){//Startar om 60
-	        			LIB.setBackground(new Color(186,206,106,190));
+	        		if ( now.after(minutesBefore)&&now.before(Constants.bookingsList.get(i).getStartTime())){ //Startar snart
+	        			LIB.setBackground(new Color(186,206,106,160)); //Green
+	        			
+	        		}else if(now.after(Constants.bookingsList.get(i).getStartTime())&&now.before(minutesLate)){
+	        			LIB.setBackground(new Color(238,232,170,160));//Yellow
 	        		}else{
 	        			LIB.setBackground(new Color(240,240,240,255));
 	        		}
 	        	}
 	        	
-	    		LIB.setPreferredSize(new Dimension(libWidth,libHeight));
-	    		LIB.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
+	    		
 	    		JLabel lblTime;
-	    		if (c.before(Constants.bookingsList.get(i).getStartTime())){
+	    		if (now.before(Constants.bookingsList.get(i).getStartTime())){
 	    			lblTime = new JLabel(startTime);
 	    		}else{
 	    			lblTime = new JLabel("-"+endTime);
@@ -345,8 +350,12 @@ public class PublicScreenGUI extends JFrame {
 	    		//Course
 	    		
 	    		String firstCourseName = "";
-	    		if (courseNames.size()>0){
-	    			firstCourseName = courseNames.get(0);
+	    		if (Constants.bookingsList.size()>0){
+	    			try {
+						firstCourseName = Constants.bookingsList.get(i).getCourses().get(0);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 	    		}
 	    		JLabel lblCourse = new JLabel(Constants.utb_kursinstans_grupper.get(firstCourseName));
 	    		lblCourse.setFont(new Font("Futura", Font.PLAIN, 30));
@@ -372,7 +381,6 @@ public class PublicScreenGUI extends JFrame {
 	    			//libScrolling.startScrolling();
 	    		}
 			}
-		contentPane.repaint();
 	}
 	/*
 	public void initFonts() {
@@ -388,10 +396,11 @@ public class PublicScreenGUI extends JFrame {
 	*/
 
 	public void updateInfo() {
-		// TODO Auto-generated method stub
-		LIBpanel.removeAll();
-			//LIBpanel.
+		LIBpanel.removeAll();	
 		drawSchedule();
+		contentPane.validate();
+		contentPane.repaint();
+		//LIBpanel.validate();
 		//libScrolling.stopScrolling();
 		//libScrolling.startScrolling();
 	}

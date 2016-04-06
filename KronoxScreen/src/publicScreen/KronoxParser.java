@@ -21,7 +21,7 @@ public class KronoxParser {
 	public KronoxParser(PublicScreenGUI gui) {
 		this.gui = gui;
 		t = new Timer();
-		t.schedule(new ParseKronox(), 20, 240*1000);
+		t.schedule(new ParseKronox(), 0, Constants.SECONDS_BETWEEN_KRONOXPARSING*1000);
 	}
 	public void parseFromKronox() {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -92,20 +92,21 @@ public class KronoxParser {
 				//Add if there are UTB_KURSINSTANS_GRUPPER else it is grupproom
 					if (thisBooking.getCourses().size()>0){
 						//Is it only bookings that are within limit 
-						Calendar c  = Calendar.getInstance();
-						c.add(Calendar.MINUTE,Constants.minutesBefore);
-						Calendar c2  = Calendar.getInstance();
-						c2.add(Calendar.MINUTE, Constants.minutesLate);
+						Calendar now  = Calendar.getInstance();
+						Calendar addEvenIfLate  = Calendar.getInstance();
+						addEvenIfLate.setTime(thisBooking.getStartTime().getTime());
+						addEvenIfLate.add(Calendar.MINUTE, Constants.minutesLate);
 						//c.add(Calendar.MINUTE,Constants.minutesBefore);
-						if (thisBooking.getStartTime().compareTo(c)>0){ //StartTimeless than Constants.minutesbefore
-								if((thisBooking.getStartTime().get(Calendar.DAY_OF_YEAR)-Calendar.getInstance().get(Calendar.DAY_OF_YEAR)==1)){
+						if (thisBooking.getStartTime().after(now)){ //StartTimeless than Constants.minutesbefore
+							if((thisBooking.getStartTime().get(Calendar.DAY_OF_YEAR)-Calendar.getInstance().get(Calendar.DAY_OF_YEAR)==1)){
 								//Tomorrow and list not full
 								if (Constants.bookingsList.size()<Constants.maxNumberPosts){ //Fill it up
-									Constants.bookingsList.add(thisBooking);
+									Constants.bookingsList.add(thisBooking);						
 								}else if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY)>18){
 									Constants.bookingsList.add(thisBooking); //Lägg till alla i morgon om det är kväll
 								}
 							}else if ((thisBooking.getStartTime().get(Calendar.DAY_OF_YEAR)-Calendar.getInstance().get(Calendar.DAY_OF_YEAR)>1)){
+								//After tomorrow
 								if (Constants.bookingsList.size()<Constants.maxNumberPosts){ //Fill it up
 									Constants.bookingsList.add(thisBooking);
 								}
@@ -116,8 +117,8 @@ public class KronoxParser {
 								}
 							}
 						}else{
-							if(thisBooking.getEndTime().compareTo(Calendar.getInstance())>0){  //Has not finished yet
-								if(thisBooking.getStartTime().before(c2)){  //And only Constants.minutesLate after start
+							if(thisBooking.getEndTime().after(now)){  //Has not finished yet
+								if(now.before(addEvenIfLate)){  //And only Constants.minutesLate after start
 									if (Constants.addOngoingCourses){
 										Constants.bookingsList.add(thisBooking);
 									}
@@ -203,14 +204,13 @@ public class KronoxParser {
 		text = text.replace("&#228;", "ä");
 		text = text.replace("&#246;", "ö");
 		text = text.replace("&#8211;","-"); 
-		
 		return text;
 	}
 	
 	private class ParseKronox extends TimerTask{
 		@Override
 		public void run() {
-			System.out.println("PARSING");
+			//System.out.println("PARSING");
 			Constants.bookingsList.clear();
 			parseFromKronox();
 			gui.updateInfo();

@@ -122,7 +122,13 @@ public class SchemaPost implements Comparable<SchemaPost>{
 
 	@Override
 	public int compareTo(SchemaPost o) {
-		return this.getStartTime().compareTo(o.getStartTime());
+		int result = this.getStartTime().compareTo(o.getStartTime());
+		if (result==0){
+			if ((this.getCourses().size()>0)&&(o.getCourses().size()>0)){
+				result = Constants.utb_kursinstans_grupper.get(this.getCourses().get(0)).compareTo(Constants.utb_kursinstans_grupper.get(o.getCourses().get(0)));
+			}
+		}
+		return result;
 	}
 
 	
