@@ -304,7 +304,7 @@ public class PublicScreenGUI extends JFrame {
 	    		String endTime= fix(Constants.bookingsList.get(i).getEndTime().get(Calendar.HOUR_OF_DAY))+":"+fix(Constants.bookingsList.get(i).getEndTime().get(Calendar.MINUTE));
 	    		Calendar c = Calendar.getInstance();
 	    		Calendar c2 = Calendar.getInstance();
-	    		c2.add(Calendar.MINUTE, 60);
+	    		c2.add(Calendar.MINUTE, Constants.minutesLate);
 				JPanel LIB = new JPanel();
 				LIB.setLayout(new FlowLayout(FlowLayout.LEFT,15,15));
 			
