@@ -314,7 +314,7 @@ public class PublicScreenGUI extends JFrame {
 	        		if ( Constants.bookingsList.get(i).getStartTime().before(c)){ //Startat
 	        			LIB.setBackground(new Color(255,255,224,160));
 	        		}else if(Constants.bookingsList.get(i).getStartTime().before(c2)){
-	        			LIB.setBackground(new Color(230,245,172,160));
+	        			LIB.setBackground(new Color(230,245,172,190));
 	        		}else{
 	        			LIB.setBackground(Color.WHITE);
 	        		}
@@ -322,7 +322,7 @@ public class PublicScreenGUI extends JFrame {
 	        		if ( Constants.bookingsList.get(i).getStartTime().before(c)){ //Startat
 	        			LIB.setBackground(new Color(238,232,170,160));
 	        		}else if(Constants.bookingsList.get(i).getStartTime().before(c2)){//Startar om 60
-	        			LIB.setBackground(new Color(186,206,106,160));
+	        			LIB.setBackground(new Color(186,206,106,190));
 	        		}else{
 	        			LIB.setBackground(new Color(240,240,240,255));
 	        		}
