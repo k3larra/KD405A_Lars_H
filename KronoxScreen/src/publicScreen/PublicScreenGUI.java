@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 public class PublicScreenGUI extends JFrame {
 
@@ -193,12 +194,14 @@ public class PublicScreenGUI extends JFrame {
 		panelBlackBox.add(roomLabel);
 		
 		lblClocklabel = new JLabel("00:00");
-		lblClocklabel.setBounds(650, 44, 228, 80);
+		lblClocklabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblClocklabel.setBounds(652, 41, 228, 80);
 		lblClocklabel.setFont(new Font("Futura", Font.PLAIN, 79));
 		mainPanel.add(lblClocklabel);
 		
 		lblDatelabel = new JLabel("day, month, year");
-		lblDatelabel.setBounds(650, 92, 230, 80);
+		lblDatelabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDatelabel.setBounds(637, 104, 256, 80);
 		lblDatelabel.setFont(new Font("Futura", Font.PLAIN, 30));
 		mainPanel.add(lblDatelabel);
 	}
@@ -217,18 +220,18 @@ public class PublicScreenGUI extends JFrame {
 		
 		JLabel lblGroupAvailable = new JLabel("Group study rooms available");
 		lblGroupAvailable.setFont(new Font("Futura", Font.PLAIN, 25));
-		lblGroupAvailable.setForeground(Color.WHITE);
+		lblGroupAvailable.setForeground(Color.BLACK);
 		lblGroupAvailable.setBounds(708, 6, 366, 33);
 		blackBarLower.add(lblGroupAvailable);
 		
 		JLabel lblGroupNiagara = new JLabel("Niagara:");
-		lblGroupNiagara.setForeground(Color.WHITE);
+		lblGroupNiagara.setForeground(Color.BLACK);
 		lblGroupNiagara.setFont(new Font("Futura", Font.PLAIN, 25));
 		lblGroupNiagara.setBounds(708, 51, 115, 33);
 		blackBarLower.add(lblGroupNiagara);
 		
 		JLabel lblGroupOrkanen = new JLabel("Orkanen:");
-		lblGroupOrkanen.setForeground(Color.WHITE);
+		lblGroupOrkanen.setForeground(Color.BLACK);
 		lblGroupOrkanen.setFont(new Font("Futura", Font.PLAIN, 25));
 		lblGroupOrkanen.setBounds(708, 84, 115, 33);
 		blackBarLower.add(lblGroupOrkanen);
