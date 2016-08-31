@@ -1,0 +1,20 @@
+
+The bluetooth apis recommended in the oracle tutorials are included in the JSR 82 API specification.
+
+I think though, that the latest release of the BlueCove (2.1.1)includes the driver for windows 7 64.
+
+check:
+
+http://snapshot.bluecove.org/distribution/download/2.1.1-SNAPSHOT/2.1.1-SNAPSHOT.62/
+
+You can download the JSR 82 specification and source code here:
+
+http://jcp.org/aboutJava/communityprocess/mrel/jsr082/index2.html
+
+A good oracle tutorial how to start is:
+
+http://developers.sun.com/mobility/midp/articles/bluetooth2/
+
+And here is also a good practical example:
+
+http://today.java.net/pub/a/today/2004/07/27/bluetooth.html
